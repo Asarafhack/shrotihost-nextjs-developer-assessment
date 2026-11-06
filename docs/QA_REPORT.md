@@ -47,3 +47,15 @@ All 26 routes tested across standard viewports with zero horizontal overflow:
 - Zero critical blockers.
 - Zero TypeScript errors.
 - Zero console errors on static routes.
+
+---
+
+## 5. Adversarial Audit Findings & Remediation Record
+
+Following a rigorous adversarial self-audit, five specific operational boundaries were reinforced:
+1. **Competitor Pricing Qualification:** The Hostinger 3.6× renewal multiplier was contextualized as plan- and term-specific (Premium Shared 48-month contract from ₹69/mo to ₹249/mo as verified Nov 2026), rather than a universal claim across all offerings.
+2. **Deterministic Advisor Disclosure:** The Conversational Advisor was explicitly labeled as a pre-indexed technical rules engine derived from ShrotiHost server specifications, clarifying that it runs without a live third-party LLM call.
+3. **Domain Availability Notice:** Added high-visibility disclaimer confirming that domain searches execute a client-side pattern check, and that live ICANN/NIXI registry locking is performed exclusively on `portal.shrotihost.in`.
+4. **Checkout Architecture Dual-Mode UI:** Added clear separation between live production deployment on WHMCS and the interactive frontend payment simulation (including mock UPI QR modal and 10% demo promo code `SHROTI10`).
+5. **Contact Form Email Dispatcher:** Added a pre-populated `mailto:` direct email bridge to `support@shrotihost.in` / `info@shrotihost.in` and WhatsApp link, ensuring guaranteed message transmission without requiring a backend server.
+

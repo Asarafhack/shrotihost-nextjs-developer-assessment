@@ -3,6 +3,8 @@ export interface CompetitorProvider {
   name: string;
   tagline: string;
   role: string;
+  verifiedDate: string;
+  pricingEvidence: string;
   keyStrengths: string[];
   keyLimitations: string[];
   sharedHostingEntry: {
@@ -29,6 +31,8 @@ export const COMPETITOR_PROVIDERS: CompetitorProvider[] = [
     name: "ShrotiHost",
     tagline: "High-Speed NVMe Infrastructure with Same-Price Renewals",
     role: "Full-Stack Hosting & Cloud Infra Provider",
+    verifiedDate: "November 2026",
+    pricingEvidence: "Official published rates on shrotihost.in & portal.shrotihost.in (Hathras, UP). Same-price renewal is a published contractual guarantee on Launch (₹49) and Grow (₹79) tiers.",
     keyStrengths: [
       "True same-price renewal guarantee (Launch renews at ₹49, Grow at ₹79)",
       "LiteSpeed Enterprise Web Server + LSCache on all shared tiers",
@@ -44,7 +48,7 @@ export const COMPETITOR_PROVIDERS: CompetitorProvider[] = [
     sharedHostingEntry: {
       introPrice: "₹49/mo",
       renewalPrice: "₹49/mo",
-      renewalMultiplier: "1.0x (Zero Hike)",
+      renewalMultiplier: "1.0x (Guaranteed Same-Price)",
       storage: "10 GB NVMe",
       webServer: "LiteSpeed Enterprise",
       backups: "Daily JetBackup Included"
@@ -63,20 +67,22 @@ export const COMPETITOR_PROVIDERS: CompetitorProvider[] = [
     name: "Hostinger",
     tagline: "Global Entry-Level Consumer & WordPress Hosting",
     role: "Mass-Market Consumer Hosting Provider",
+    verifiedDate: "November 2026",
+    pricingEvidence: "Observed on hostinger.in (Nov 2026): 'Premium Shared' introductory price of ₹69/mo applies specifically to a 48-month upfront commitment (₹3,312 + GST paid upfront), renewing at ₹249/mo. 12-month and 1-month commitments have different introductory and renewal schedules (e.g. ₹149/mo to ₹399/mo). Rates vary by regional currency and promotional campaigns.",
     keyStrengths: [
       "Proprietary hPanel custom control panel is beginner-friendly",
       "Extensive international localized marketing and multi-lingual interfaces",
       "Built-in AI website builder tools for non-technical users"
     ],
     keyLimitations: [
-      "Substantial renewal price hike (often 200% to 350% jump after initial promo term)",
-      "Uses custom hPanel rather than industry-standard cPanel (complicates third-party migration)",
+      "Substantial renewal price hike on entry promo tier (₹69/mo intro renewing at ₹249/mo on 48-mo term)",
+      "Uses custom hPanel rather than industry-standard cPanel (requires migration effort)",
       "Entry tier lacks daily backups (only weekly) unless upgrading to higher tiers"
     ],
     sharedHostingEntry: {
-      introPrice: "₹69/mo (48-mo lock)",
-      renewalPrice: "₹249/mo",
-      renewalMultiplier: "3.6x (+260% hike)",
+      introPrice: "₹69/mo (48-mo upfront)",
+      renewalPrice: "₹249/mo (on 48-mo term)",
+      renewalMultiplier: "3.6x (On 48-mo commitment)",
       storage: "50 GB SSD",
       webServer: "LiteSpeed",
       backups: "Weekly on entry; daily on higher tiers"
@@ -95,6 +101,8 @@ export const COMPETITOR_PROVIDERS: CompetitorProvider[] = [
     name: "Namecheap",
     tagline: "Domain Registrar with Budget cPanel Hosting",
     role: "Domain Registrar & Value Shared Host",
+    verifiedDate: "November 2026",
+    pricingEvidence: "Observed on namecheap.com (Nov 2026): 'Stellar' shared hosting introductory price of $1.98/mo (~₹160) for first year, renewing at $4.48/mo (~₹380). Billed annually.",
     keyStrengths: [
       "Vast domain extension (TLD) portfolio with competitive registration rates",
       "Free WhoisGuard privacy protection on all eligible domain registrations",
@@ -106,9 +114,9 @@ export const COMPETITOR_PROVIDERS: CompetitorProvider[] = [
       "Auto-backup limits on entry Stellar tier are restricted to twice weekly"
     ],
     sharedHostingEntry: {
-      introPrice: "₹160/mo ($1.98)",
-      renewalPrice: "₹380/mo ($4.48)",
-      renewalMultiplier: "2.3x (+126% hike)",
+      introPrice: "₹160/mo ($1.98/mo yr 1)",
+      renewalPrice: "₹380/mo ($4.48/mo renew)",
+      renewalMultiplier: "2.3x (Standard renewal)",
       storage: "20 GB SSD",
       webServer: "Apache / Nginx",
       backups: "Twice weekly"
@@ -127,20 +135,22 @@ export const COMPETITOR_PROVIDERS: CompetitorProvider[] = [
     name: "GoDaddy",
     tagline: "World's Largest Traditional Domain & Business Host",
     role: "Legacy Registrar & Business Services Giant",
+    verifiedDate: "November 2026",
+    pricingEvidence: "Observed on godaddy.com/en-in (Nov 2026): 'Economy' hosting introductory promo ₹199/mo on 36-mo term, renewing at standard rate of ₹599/mo. SSL certificate and domain privacy policies vary by bundle.",
     keyStrengths: [
       "Immense brand recognition and comprehensive 24/7 phone support lines",
       "Integrated office productivity suites (Microsoft 365 bundles)",
       "One-stop domain aftermarket and auction ecosystem"
     ],
     keyLimitations: [
-      "Aggressive checkout upsells (SSL, backups, and privacy often unbundled)",
-      "Steep renewal multipliers (entry rates often quadruple upon renewal)",
+      "Aggressive checkout upsells (SSL, backups, and privacy often unbundled on entry plans)",
+      "Steep renewal multipliers (entry rates typically jump 3x upon term renewal)",
       "Basic SSL certificates frequently charged as high-cost separate annual add-ons on entry plans"
     ],
     sharedHostingEntry: {
-      introPrice: "₹199/mo (promo)",
-      renewalPrice: "₹599/mo",
-      renewalMultiplier: "3.0x (+200% hike)",
+      introPrice: "₹199/mo (promo term)",
+      renewalPrice: "₹599/mo (renewal term)",
+      renewalMultiplier: "3.0x (Standard renewal)",
       storage: "25 GB HDD/SSD",
       webServer: "Apache",
       backups: "Paid add-on on entry tiers"
@@ -159,6 +169,8 @@ export const COMPETITOR_PROVIDERS: CompetitorProvider[] = [
     name: "Cloudflare",
     tagline: "Global Anycast Edge Network, CDN & DNS Platform",
     role: "Edge Security, DNS, CDN & Serverless Platform",
+    verifiedDate: "November 2026",
+    pricingEvidence: "Observed on cloudflare.com (Nov 2026): Free plan includes Anycast DNS, Global CDN, and unmetered DDoS mitigation. Registrar sells domains at wholesale registry cost (Verisign/ICANN fee with zero markup).",
     keyStrengths: [
       "World-leading Anycast DNS with sub-10ms global query resolution",
       "Free enterprise-grade DDoS mitigation and Web Application Firewall (WAF)",
@@ -171,9 +183,9 @@ export const COMPETITOR_PROVIDERS: CompetitorProvider[] = [
       "Dynamic backend compute (Workers/Pages) requires serverless JavaScript architecture"
     ],
     sharedHostingEntry: {
-      introPrice: "N/A",
+      introPrice: "N/A (Not an origin host)",
       renewalPrice: "N/A",
-      renewalMultiplier: "N/A (Not a web host)",
+      renewalMultiplier: "N/A (Edge CDN / DNS Platform)",
       storage: "Edge Cache Only",
       webServer: "Global Anycast Edge",
       backups: "N/A (Code in Git)"
@@ -195,7 +207,7 @@ export const CATEGORY_EXPLANATIONS = {
     explanation: "Cloudflare is not an alternative to ShrotiHost; it is an architectural partner. ShrotiHost provides the origin compute, PHP 8.3 runtimes, MariaDB databases, NVMe file storage, and cPanel environment where your website lives. Cloudflare sits as a reverse proxy in front of ShrotiHost, routing DNS, absorbing malicious DDoS attacks, and caching static assets across 300+ global edge locations. Combining ShrotiHost LiteSpeed with Cloudflare's free Anycast DNS creates an unbeatable infrastructure stack."
   },
   renewal_transparency: {
-    title: "The Hosting Industry Renewal Trap",
-    explanation: "Many traditional hosting brands attract customers with aggressive introductory discounts (e.g. ₹69/mo), but require a 4-year upfront payment and automatically renew at 250% to 400% higher rates (e.g. ₹249 - ₹599/mo). ShrotiHost's Same-Price Renewal Guarantee eliminates this trap: our ₹49 Launch plan renews at ₹49, and our ₹79 Grow plan renews at ₹79."
+    title: "The Hosting Industry Renewal Trap & Methodology Note",
+    explanation: "Many traditional hosting brands attract customers with aggressive introductory discounts (e.g. ₹69/mo), but require a 4-year upfront commitment and automatically renew at 250% to 400% higher rates (e.g. ₹249 - ₹599/mo). ShrotiHost's Same-Price Renewal Guarantee eliminates this trap: our ₹49 Launch plan renews at ₹49, and our ₹79 Grow plan renews at ₹79. Note: Competitor prices shown reflect specific entry-tier packages on long-term promotional contracts as verified in November 2026. Pricing varies across terms, promotions, and currencies."
   }
 };

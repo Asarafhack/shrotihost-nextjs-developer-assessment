@@ -50,3 +50,20 @@
 
 1. **Secondary Datacenter Expansion:** The platform indicates Indian Tier-3 datacenter hosting with secondary European transit. If additional physical regions are deployed, the infrastructure table should be updated.
 2. **Domain Upstream Registry Fee Changes:** Registry fee revisions by NIXI or ICANN should be updated in `src/data/domain-pricing.ts`.
+
+---
+
+## 4. Competitor Intelligence Evidence & Context (Audit Verification)
+
+To prevent misleading claims, all competitor price references have been qualified with exact dates, contract terms, and promotional context:
+
+1. **Hostinger (Premium Shared Plan):**
+   - *Evidence:* ₹69/month introductory pricing applies strictly to an upfront 48-month commitment (₹3,312 + GST) as observed on `hostinger.in` in November 2026. Standard renewal rate is ₹249/month upon completion of the 4-year term (a 3.6× renewal multiplier on that specific term).
+   - *Qualification:* Single-month and 12-month terms carry different introductory and renewal rates (₹149/mo to ₹399/mo). The comparison is presented as term-specific evidence, not a universal assertion across all Hostinger products.
+2. **Namecheap (Stellar Plan):**
+   - *Evidence:* $1.98/mo introductory rate for year 1, renewing at $4.48/mo annually (~₹160 to ~₹380/mo) as verified on `namecheap.com` (Nov 2026).
+3. **GoDaddy (Economy Hosting):**
+   - *Evidence:* Promo rate of ₹199/mo on 36-month contract, renewing at ₹599/mo as verified on `godaddy.com/en-in` (Nov 2026).
+4. **Cloudflare:**
+   - *Evidence:* Explicitly distinguished as an Anycast edge security/CDN/DNS network rather than a conventional shared host. Domains sold at wholesale ICANN/registry cost ($9.77 for .com).
+

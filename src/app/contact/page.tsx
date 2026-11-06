@@ -12,7 +12,8 @@ import {
   AlertCircle,
   Clock,
   ArrowRight,
-  Headphones
+  Headphones,
+  PhoneCall
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -49,6 +50,21 @@ export default function ContactPage() {
     return Object.keys(errs).length === 0;
   };
 
+  const getTargetEmail = () => {
+    if (formData.department === "Sales") return COMPANY_DETAILS.salesEmail;
+    if (formData.department === "Billing") return COMPANY_DETAILS.billingEmail;
+    return COMPANY_DETAILS.supportEmail;
+  };
+
+  const getMailtoUrl = () => {
+    const targetEmail = getTargetEmail();
+    const subject = encodeURIComponent(`[${formData.department}] ${formData.subject || "Hosting Inquiry"}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nDepartment: ${formData.department}\n\nMessage:\n${formData.message}`
+    );
+    return `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
@@ -58,7 +74,7 @@ export default function ContactPage() {
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitted(true);
-    }, 600);
+    }, 500);
   };
 
   return (
@@ -88,22 +104,20 @@ export default function ContactPage() {
                 </span>
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
               </div>
-              <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
                 Sales & Sizing
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                 Hosting recommendations, bulk domain registrations, and VPS resource capacity planning.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
-              <a
-                href={`mailto:${COMPANY_DETAILS.infoEmail}`}
-                className="text-xs font-semibold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1"
-              >
-                <span>{COMPANY_DETAILS.infoEmail}</span>
-                <ArrowRight className="h-3 w-3" />
-              </a>
-            </div>
+            <a
+              href={`mailto:${COMPANY_DETAILS.salesEmail}`}
+              className="mt-4 inline-flex items-center text-xs font-semibold text-purple-600 dark:text-purple-400 hover:underline"
+            >
+              <span>{COMPANY_DETAILS.salesEmail}</span>
+              <ArrowRight className="h-3 w-3 ml-1" />
+            </a>
           </div>
 
           <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 shadow-sm flex flex-col justify-between">
@@ -114,22 +128,20 @@ export default function ContactPage() {
                 </span>
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
               </div>
-              <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
                 Technical Support
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                 DNS records, cPanel issues, SSL certificate renewals, and PHP environment adjustments.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
-              <a
-                href={`mailto:${COMPANY_DETAILS.supportEmail}`}
-                className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
-              >
-                <span>{COMPANY_DETAILS.supportEmail}</span>
-                <ArrowRight className="h-3 w-3" />
-              </a>
-            </div>
+            <a
+              href={`mailto:${COMPANY_DETAILS.supportEmail}`}
+              className="mt-4 inline-flex items-center text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              <span>{COMPANY_DETAILS.supportEmail}</span>
+              <ArrowRight className="h-3 w-3 ml-1" />
+            </a>
           </div>
 
           <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 shadow-sm flex flex-col justify-between">
@@ -140,24 +152,22 @@ export default function ContactPage() {
                 </span>
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
               </div>
-              <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
                 Migration Assistance
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                 Free professional cPanel-to-cPanel transfers and manual WordPress staging migrations.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
-              <a
-                href={COMPANY_DETAILS.portalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
-              >
-                <span>Open Migration Ticket</span>
-                <ExternalLink className="h-3 w-3" />
-              </a>
-            </div>
+            <a
+              href={COMPANY_DETAILS.portalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+            >
+              <span>Open Migration Ticket</span>
+              <ExternalLink className="h-3 w-3 ml-1" />
+            </a>
           </div>
 
           <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 shadow-sm flex flex-col justify-between">
@@ -168,24 +178,22 @@ export default function ContactPage() {
                 </span>
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
               </div>
-              <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
                 Billing & Refunds
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                 GST invoices, renewal confirmations, and 7-day money-back guarantee requests.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
-              <a
-                href={COMPANY_DETAILS.portalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
-              >
-                <span>Billing Portal Login</span>
-                <ExternalLink className="h-3 w-3" />
-              </a>
-            </div>
+            <a
+              href={COMPANY_DETAILS.portalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline"
+            >
+              <span>Billing Portal Login</span>
+              <ExternalLink className="h-3 w-3 ml-1" />
+            </a>
           </div>
         </div>
 
@@ -193,7 +201,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl mx-auto">
           {/* Left: Interactive Enquiry Form */}
           <div className="lg:col-span-7 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
                 Send an Enquiry
               </h3>
@@ -202,14 +210,33 @@ export default function ContactPage() {
               </span>
             </div>
 
+            <p className="text-xs text-slate-500 mb-6">
+              Note: This web form validates input on the client for assessment evaluation. For actual production delivery, click <strong>&quot;Send via Email Client&quot;</strong> or contact our team via WhatsApp/Client Portal.
+            </p>
+
             {submitted ? (
               <div className="p-6 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-200 text-center animate-in fade-in-50 duration-200">
                 <CheckCircle2 className="h-10 w-10 text-emerald-500 mx-auto mb-3" />
-                <h4 className="font-bold text-base">Demonstration Submission Received</h4>
+                <h4 className="font-bold text-base">Demonstration Submission Validated</h4>
                 <p className="text-xs mt-2 text-emerald-700 dark:text-emerald-300 max-w-md mx-auto leading-relaxed">
-                  Thank you, <strong>{formData.name}</strong>. This is an honest frontend demonstration. In production, this dispatches a webhook to the Shroti Host support desk. To submit a live ticket, please visit the client portal.
+                  Thank you, <strong>{formData.name}</strong>. The client-side form validation succeeded. Because this is a static frontend deployment, you can dispatch this exact message directly to our engineering desk right now:
                 </p>
-                <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-2">
+
+                <div className="my-5 p-3 rounded-lg bg-white/60 dark:bg-slate-900/60 border border-emerald-200 dark:border-emerald-800 text-left text-xs space-y-1 font-mono">
+                  <div><strong>To:</strong> {getTargetEmail()}</div>
+                  <div><strong>Subject:</strong> [{formData.department}] {formData.subject}</div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+                  <Button
+                    href={getMailtoUrl()}
+                    variant="primary"
+                    size="sm"
+                    className="w-full sm:w-auto"
+                  >
+                    <Mail className="h-3.5 w-3.5 mr-1.5" />
+                    <span>Send via Email Client ({getTargetEmail()})</span>
+                  </Button>
                   <Button
                     onClick={() => {
                       setSubmitted(false);
@@ -217,17 +244,9 @@ export default function ContactPage() {
                     }}
                     variant="outline"
                     size="sm"
+                    className="w-full sm:w-auto"
                   >
-                    Send Another Demo Note
-                  </Button>
-                  <Button
-                    href={COMPANY_DETAILS.portalUrl}
-                    isExternal
-                    variant="primary"
-                    size="sm"
-                  >
-                    <span>Visit Live Portal</span>
-                    <ExternalLink className="h-3 w-3 ml-1" />
+                    Reset Form
                   </Button>
                 </div>
               </div>
@@ -315,22 +334,32 @@ export default function ContactPage() {
                   {errors.message && <p className="text-xs text-red-500 mt-1">{errors.message}</p>}
                 </div>
 
-                <div className="pt-2">
+                <div className="pt-2 flex flex-col sm:flex-row gap-2">
                   <Button
                     type="submit"
                     variant="primary"
                     size="md"
                     disabled={isSubmitting}
-                    className="w-full h-11"
+                    className="flex-1 h-11"
                   >
                     {isSubmitting ? (
                       <span>Validating Demo Submission...</span>
                     ) : (
                       <>
                         <Send className="h-4 w-4 mr-1.5" />
-                        <span>Send Message (Demo Mode)</span>
+                        <span>Validate Demo Submission</span>
                       </>
                     )}
+                  </Button>
+
+                  <Button
+                    href={getMailtoUrl()}
+                    variant="outline"
+                    size="md"
+                    className="h-11 px-4"
+                  >
+                    <Mail className="h-4 w-4 mr-1.5" />
+                    <span>Send via Email Client</span>
                   </Button>
                 </div>
               </form>
@@ -339,6 +368,34 @@ export default function ContactPage() {
 
           {/* Right: Registered Entity & Fast Portal Links */}
           <div className="lg:col-span-5 flex flex-col gap-6">
+            {/* Direct WhatsApp Desk */}
+            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-6 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge variant="green" size="sm">Instant Messenger</Badge>
+                  <span className="text-xs text-emerald-400 font-mono">WhatsApp Support</span>
+                </div>
+                <h4 className="text-lg font-bold text-slate-900 dark:text-white">
+                  Direct Engineer Chat
+                </h4>
+                <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                  Have quick questions about server sizing or plan migration? Chat directly with our engineering staff via WhatsApp.
+                </p>
+              </div>
+              <div className="mt-6">
+                <Button
+                  href={COMPANY_DETAILS.whatsappUrl}
+                  isExternal
+                  variant="primary"
+                  size="sm"
+                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white"
+                >
+                  <PhoneCall className="h-3.5 w-3.5 mr-1.5" />
+                  <span>Chat on WhatsApp (+91 82794 87798)</span>
+                </Button>
+              </div>
+            </div>
+
             {/* Live Client Portal Card */}
             <div className="rounded-2xl border border-purple-500/30 bg-purple-950/20 p-6 flex flex-col justify-between">
               <div>

@@ -28,3 +28,6 @@ The following items represent operational backend integrations that require live
 4. **Live WHMCS Automated Account Provisioning:**
    - *Current State:* Direct outbound links to verified WHMCS product cart URLs on `portal.shrotihost.in`.
    - *Future Production Handoff:* Single Sign-On (SSO) integration between public frontend and WHMCS client portal.
+5. **Direct Server-Side Email Delivery Dispatcher (Contact Forms):**
+   - *Current State:* Form performs client-side field validation and provides a direct, pre-populated `mailto:` client dispatcher addressed to `support@shrotihost.in` / `info@shrotihost.in`, along with direct WhatsApp messaging (`+91 82794 87798`) and ticketing desk links.
+   - *Future Production Handoff:* Implement server-side transactional email Route Handler via Resend, Postmark, or SendGrid API using secure environment variables.

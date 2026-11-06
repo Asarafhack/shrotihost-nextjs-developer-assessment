@@ -85,6 +85,9 @@ export default function DomainsPage() {
                 <span>Check Domain</span>
                 <ArrowRight className="h-4 w-4 ml-1.5" />
               </Button>
+              <p className="mt-3 text-[11px] text-slate-400">
+                Notice: Client-side demonstration simulator. Real-time registry availability &amp; registration occurs via the official portal at <strong>portal.shrotihost.in</strong>.
+              </p>
             </form>
           </div>
         </Container>

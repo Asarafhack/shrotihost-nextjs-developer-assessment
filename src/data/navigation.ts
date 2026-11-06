@@ -131,6 +131,10 @@ export const COMPANY_DETAILS = {
   headquarters: "Hathras, Uttar Pradesh, India",
   supportEmail: "support@shrotihost.in",
   infoEmail: "info@shrotihost.in",
+  salesEmail: "info@shrotihost.in",
+  billingEmail: "support@shrotihost.in",
+  whatsappUrl: "https://wa.me/918279487798",
+  whatsappNumber: "+91 82794 87798",
   portalUrl: "https://portal.shrotihost.in/",
   uptimeTarget: "99.9% Operational Target"
 };

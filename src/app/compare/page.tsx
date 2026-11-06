@@ -215,8 +215,16 @@ export default function ComparePage() {
                       </div>
                     </div>
 
-                    <div className="pt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 italic">
-                      <strong>Best suited for:</strong> {provider.idealFor}
+                    <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2 text-[11px] text-slate-500">
+                      <div className="p-2 rounded-lg bg-slate-100/70 dark:bg-slate-800/50 text-[10px] leading-relaxed">
+                        <span className="font-bold text-slate-700 dark:text-slate-300 block mb-0.5">
+                          Evidence & Context ({provider.verifiedDate}):
+                        </span>
+                        <span>{provider.pricingEvidence}</span>
+                      </div>
+                      <div className="italic">
+                        <strong>Best suited for:</strong> {provider.idealFor}
+                      </div>
                     </div>
                   </div>
                 );
