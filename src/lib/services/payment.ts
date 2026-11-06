@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { ALL_HOSTING_PLANS, VPS_PLANS, HostingPlan } from "@/data/hosting-plans";
+import { ALL_HOSTING_PLANS, VPS_PLANS } from "@/data/hosting-plans";
 import {
   CreateOrderParams,
   PaymentOrderResult,

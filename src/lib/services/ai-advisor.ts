@@ -1,4 +1,4 @@
-import { ALL_HOSTING_PLANS, VPS_PLANS, HostingPlan } from "@/data/hosting-plans";
+import { ALL_HOSTING_PLANS, VPS_PLANS } from "@/data/hosting-plans";
 import { AdvisorQueryPayload, AdvisorRecommendationResult } from "./types";
 
 export class AiAdvisorService {

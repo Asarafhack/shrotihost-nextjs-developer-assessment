@@ -1,4 +1,4 @@
-import { DOMAIN_TLDS, DomainTld } from "@/data/domain-pricing";
+import { DOMAIN_TLDS } from "@/data/domain-pricing";
 import { DomainCheckResult } from "./types";
 
 export class RegistrarService {

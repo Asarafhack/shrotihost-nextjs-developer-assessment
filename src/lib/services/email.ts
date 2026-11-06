@@ -1,8 +1,7 @@
 import {
   EmailDispatchParams,
   EmailDispatchResult,
-  ContactSubmissionPayload,
-  PaymentOrderResult
+  ContactSubmissionPayload
 } from "./types";
 
 export class EmailService {

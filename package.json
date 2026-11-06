@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "test": "node scripts/test-integrations.mjs",
     "test:routes": "node scripts/audit-routes.mjs",
-    "test:backend": "node scripts/test-integrations.mjs"
+    "test:backend": "node scripts/test-integrations.mjs",
+    "test:sandbox": "node scripts/test-sandbox-scenarios.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.4",

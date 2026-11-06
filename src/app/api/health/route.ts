@@ -3,7 +3,6 @@ import { paymentService } from "@/lib/services/payment";
 import { whmcsService } from "@/lib/services/whmcs";
 import { registrarService } from "@/lib/services/registrar";
 import { emailService } from "@/lib/services/email";
-import { aiAdvisorService } from "@/lib/services/ai-advisor";
 import { HealthCheckResult } from "@/lib/services/types";
 
 const startTime = Date.now();
