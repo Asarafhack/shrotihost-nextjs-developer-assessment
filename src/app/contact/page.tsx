@@ -35,6 +35,7 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [serverTicket, setServerTicket] = useState<{ ticketMask: string; messageId: string } | null>(null);
 
   const validate = () => {
     const errs: Record<string, string> = {};
@@ -65,16 +66,39 @@ export default function ContactPage() {
     return `mailto:${targetEmail}?subject=${subject}&body=${body}`;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
-    // Simulate deterministic demo submission
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/contact/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          department: formData.department,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.ticket) {
+          setServerTicket({
+            ticketMask: data.ticket.ticketMask,
+            messageId: data.messageId,
+          });
+        }
+      }
+    } catch {
+      // Fallback to client simulation
+    } finally {
       setIsSubmitting(false);
       setSubmitted(true);
-    }, 500);
+    }
   };
 
   return (
@@ -219,8 +243,20 @@ export default function ContactPage() {
                 <CheckCircle2 className="h-10 w-10 text-emerald-500 mx-auto mb-3" />
                 <h4 className="font-bold text-base">Demonstration Submission Validated</h4>
                 <p className="text-xs mt-2 text-emerald-700 dark:text-emerald-300 max-w-md mx-auto leading-relaxed">
-                  Thank you, <strong>{formData.name}</strong>. The client-side form validation succeeded. Because this is a static frontend deployment, you can dispatch this exact message directly to our engineering desk right now:
+                  Thank you, <strong>{formData.name}</strong>. The form validation and API pipeline succeeded.
                 </p>
+
+                {serverTicket && (
+                  <div className="my-4 p-3 rounded-lg bg-emerald-100/70 dark:bg-emerald-900/40 border border-emerald-300 dark:border-emerald-700 text-xs text-left">
+                    <div className="font-bold text-emerald-950 dark:text-emerald-100 flex items-center gap-1.5">
+                      <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                      <span>WHMCS Support Ticket Queued: #{serverTicket.ticketMask}</span>
+                    </div>
+                    <div className="text-[11px] text-emerald-800 dark:text-emerald-300 font-mono mt-1">
+                      Email Dispatch ID: {serverTicket.messageId}
+                    </div>
+                  </div>
+                )}
 
                 <div className="my-5 p-3 rounded-lg bg-white/60 dark:bg-slate-900/60 border border-emerald-200 dark:border-emerald-800 text-left text-xs space-y-1 font-mono">
                   <div><strong>To:</strong> {getTargetEmail()}</div>

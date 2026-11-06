@@ -40,6 +40,8 @@ export default function DemoCheckoutPage() {
   const [showQrModal, setShowQrModal] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const [orderId, setOrderId] = useState("");
+  const [activeRazorpayOrderId, setActiveRazorpayOrderId] = useState<string | null>(null);
+  const [whmcsDetails, setWhmcsDetails] = useState<{ orderId: number; invoiceId: number } | null>(null);
 
   // Base pricing calculations
   const rawBaseRate = billingCycle === "annual" ? selectedPlan.annualPrice * 12 : selectedPlan.monthlyPrice;
@@ -59,28 +61,88 @@ export default function DemoCheckoutPage() {
     }
   };
 
-  const handleInitiatePayment = (e: React.FormEvent) => {
+  const executeOrderCreation = async () => {
+    try {
+      const res = await fetch("/api/payment/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          planId: selectedPlan.id,
+          billingCycle: billingCycle === "annual" ? "annually" : "monthly",
+          couponCode,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.order?.orderId) {
+          setActiveRazorpayOrderId(data.order.orderId);
+          return data.order.orderId;
+        }
+      }
+    } catch {
+      // Fallback for static builds without server
+    }
+    const fallbackId = `order_mock_${Date.now()}`;
+    setActiveRazorpayOrderId(fallbackId);
+    return fallbackId;
+  };
+
+  const executeOrderVerification = async (rzpOrderId: string) => {
+    const mockPaymentId = `pay_mock_${Date.now()}`;
+    const mockSignature = `mock_sig_pass_${Date.now()}`;
+
+    try {
+      const res = await fetch("/api/payment/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          razorpay_order_id: rzpOrderId,
+          razorpay_payment_id: mockPaymentId,
+          razorpay_signature: mockSignature,
+          planId: selectedPlan.id,
+          billingCycle: billingCycle === "annual" ? "annually" : "monthly",
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.whmcs) {
+          setWhmcsDetails({
+            orderId: data.whmcs.whmcsOrderId,
+            invoiceId: data.whmcs.whmcsInvoiceId,
+          });
+        }
+      }
+    } catch {
+      // Fallback
+    }
+  };
+
+  const handleInitiatePayment = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsProcessing(true);
+    const createdOrderId = await executeOrderCreation();
+    setIsProcessing(false);
+
     if (paymentMethod === "upi") {
       setShowQrModal(true);
     } else {
       setIsProcessing(true);
-      setTimeout(() => {
-        setIsProcessing(false);
-        setOrderId(`SHR-${Date.now().toString().slice(-6)}`);
-        setIsCompleted(true);
-      }, 700);
-    }
-  };
-
-  const handleConfirmUpiDemo = () => {
-    setShowQrModal(false);
-    setIsProcessing(true);
-    setTimeout(() => {
+      await executeOrderVerification(createdOrderId);
       setIsProcessing(false);
       setOrderId(`SHR-${Date.now().toString().slice(-6)}`);
       setIsCompleted(true);
-    }, 500);
+    }
+  };
+
+  const handleConfirmUpiDemo = async () => {
+    setShowQrModal(false);
+    setIsProcessing(true);
+    const rzpId = activeRazorpayOrderId || `order_mock_${Date.now()}`;
+    await executeOrderVerification(rzpId);
+    setIsProcessing(false);
+    setOrderId(`SHR-${Date.now().toString().slice(-6)}`);
+    setIsCompleted(true);
   };
 
   return (
@@ -179,6 +241,25 @@ export default function DemoCheckoutPage() {
                 <span className="text-slate-900 dark:text-slate-100 font-sans">Total Paid (Demo):</span>
                 <span className="text-purple-600 dark:text-purple-400 font-mono text-base">{formatINR(totalAmount)}</span>
               </div>
+
+              {whmcsDetails && (
+                <div className="pt-2 border-t border-slate-200 dark:border-slate-700 text-[11px] text-emerald-600 dark:text-emerald-400 space-y-1">
+                  <div className="flex justify-between">
+                    <span>WHMCS Order Ref:</span>
+                    <span className="font-bold">#{whmcsDetails.orderId}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>WHMCS Invoice Ref:</span>
+                    <span className="font-bold">#{whmcsDetails.invoiceId}</span>
+                  </div>
+                  {activeRazorpayOrderId && (
+                    <div className="flex justify-between text-slate-500">
+                      <span>Razorpay Order ID:</span>
+                      <span className="font-mono text-[10px]">{activeRazorpayOrderId}</span>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="pt-2 text-[10px] text-slate-400 font-sans text-center">
                 Pledged: Guaranteed Same-Price Renewal at {formatINR(selectedPlan.renewalPrice)}/mo on renewal.

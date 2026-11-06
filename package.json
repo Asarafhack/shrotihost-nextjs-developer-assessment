@@ -6,7 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:backend": "node scripts/test-integrations.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.4",

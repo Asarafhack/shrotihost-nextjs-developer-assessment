@@ -79,7 +79,7 @@ export default function PlanAdvisorPage() {
   const [userInput, setUserInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSendPrompt = (promptText: string) => {
+  const handleSendPrompt = async (promptText: string) => {
     if (!promptText.trim()) return;
 
     const userMsgId = `user-${Date.now()}`;
@@ -93,7 +93,36 @@ export default function PlanAdvisorPage() {
     setUserInput("");
     setIsTyping(true);
 
-    // Simulate intelligent deterministic processing
+    try {
+      const res = await fetch("/api/advisor/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: promptText }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.reply) {
+          setChatMessages((prev) => [
+            ...prev,
+            {
+              id: `advisor-${Date.now()}`,
+              sender: "advisor",
+              text: data.reply,
+              recommendedPlan: data.recommendedPlan,
+              rationale: data.reasoning,
+              suggestedPrompts: ["Which hosting plan should I choose?", "Do I need shared hosting or VPS?"],
+            },
+          ]);
+          setIsTyping(false);
+          return;
+        }
+      }
+    } catch {
+      // Fallback to local deterministic rules
+    }
+
+    // Fallback deterministic processing
     setTimeout(() => {
       const lower = promptText.toLowerCase();
       let replyText = "";

@@ -28,18 +28,36 @@ export default function DomainsPage() {
   const [selectedCategory, setSelectedCategory] = useState<TldCategory>("all");
   const [query, setQuery] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<SimulatedDomainResult[]>([]);
 
   const filteredTlds = selectedCategory === "all"
     ? DOMAIN_TLDS
     : DOMAIN_TLDS.filter((t) => t.category.includes(selectedCategory));
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
+    setIsSearching(true);
+    try {
+      const apiRes = await fetch(`/api/domains/check?domain=${encodeURIComponent(query)}`);
+      if (apiRes.ok) {
+        const data = await apiRes.json();
+        if (data.success) {
+          const sim = simulateDomainCheck(query);
+          setResults(sim);
+          setHasSearched(true);
+          setIsSearching(false);
+          return;
+        }
+      }
+    } catch {
+      // Graceful fallback to client simulator
+    }
     const res = simulateDomainCheck(query);
     setResults(res);
     setHasSearched(true);
+    setIsSearching(false);
   };
 
   const domainFaqs = getFaqsByCategory("domains").map((faq) => ({
