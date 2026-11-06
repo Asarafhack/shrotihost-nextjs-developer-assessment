@@ -32,6 +32,16 @@ export async function POST(req: NextRequest) {
 
     const normalizedCycle: BillingCycle = rawCycle === "annual" ? "annually" : (rawCycle as BillingCycle);
 
+    if (body.customerEmail && body.customerEmail.trim()) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(body.customerEmail.trim())) {
+        return NextResponse.json(
+          { success: false, error: "Invalid customer email address format." },
+          { status: 400 }
+        );
+      }
+    }
+
     const order = await paymentService.createOrder({
       planId: body.planId,
       billingCycle: normalizedCycle,

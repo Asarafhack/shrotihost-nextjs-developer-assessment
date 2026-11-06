@@ -39,6 +39,7 @@ export class EmailService {
       try {
         const response = await fetch("https://api.resend.com/emails", {
           method: "POST",
+          signal: AbortSignal.timeout(10000),
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${this.apiKey}`,
@@ -66,7 +67,8 @@ export class EmailService {
           timestamp: new Date().toISOString(),
         };
       } catch (err: unknown) {
-        console.warn("Live email dispatch failed, falling back to mock provider:", (err as Error).message);
+        console.error("Live email dispatch failed:", (err as Error).message);
+        throw new Error(`Email Dispatch Error: ${(err as Error).message}`);
       }
     }
 

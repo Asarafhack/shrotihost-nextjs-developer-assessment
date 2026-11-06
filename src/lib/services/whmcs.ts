@@ -44,6 +44,7 @@ export class WhmcsService {
 
     const response = await fetch(this.apiUrl, {
       method: "POST",
+      signal: AbortSignal.timeout(10000),
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -88,7 +89,8 @@ export class WhmcsService {
           isMock: false,
         };
       } catch (err: unknown) {
-        console.warn("Live WHMCS call failed, falling back to mock response:", (err as Error).message);
+        console.error("Live WHMCS AddOrder failed:", (err as Error).message);
+        throw new Error(`WHMCS Provisioning Error: ${(err as Error).message}`);
       }
     }
 
@@ -133,7 +135,8 @@ export class WhmcsService {
           isMock: false,
         };
       } catch (err: unknown) {
-        console.warn("Live WHMCS OpenTicket failed, falling back to mock response:", (err as Error).message);
+        console.error("Live WHMCS OpenTicket failed:", (err as Error).message);
+        throw new Error(`WHMCS Ticket Error: ${(err as Error).message}`);
       }
     }
 

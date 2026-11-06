@@ -12,8 +12,11 @@ import {
 const processedEventIds = new Map<string, number>();
 const EVENT_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
+// In-memory cache for verified payment IDs to prevent duplicate order provisioning
+const processedPaymentIds = new Map<string, PaymentVerificationResult>();
+
 // In-memory mock orders store for verification in mock mode
-const mockOrderStore = new Map<string, { amount: number; planId: string; createdAt: number }>();
+const mockOrderStore = new Map<string, { amount: number; planId: string; customerEmail?: string; createdAt: number }>();
 
 function cleanExpiredEvents() {
   const now = Date.now();
@@ -91,6 +94,7 @@ export class PaymentService {
         const auth = Buffer.from(`${this.keyId}:${this.keySecret}`).toString("base64");
         const res = await fetch("https://api.razorpay.com/v1/orders", {
           method: "POST",
+          signal: AbortSignal.timeout(10000),
           headers: {
             "Content-Type": "application/json",
             Authorization: `Basic ${auth}`,
@@ -132,7 +136,8 @@ export class PaymentService {
           notes: data.notes,
         };
       } catch (err: unknown) {
-        console.warn("Live Razorpay call failed, falling back to mock provider:", (err as Error).message);
+        console.error("Live Razorpay call failed:", (err as Error).message);
+        throw new Error(`Razorpay Order Creation Error: ${(err as Error).message}`);
       }
     }
 
@@ -141,6 +146,7 @@ export class PaymentService {
     mockOrderStore.set(mockOrderId, {
       amount: amountInPaise,
       planId,
+      customerEmail,
       createdAt: Date.now(),
     });
 
@@ -193,16 +199,7 @@ export class PaymentService {
         razorpay_signature === generatedExpected ||
         razorpay_signature.startsWith("mock_sig_pass_");
 
-      if (isMatch) {
-        return {
-          success: true,
-          verified: true,
-          orderId: razorpay_order_id,
-          paymentId: razorpay_payment_id,
-          message: "Payment signature cryptographically verified (Mock Environment).",
-          timestamp: new Date().toISOString(),
-        };
-      } else {
+      if (!isMatch) {
         return {
           success: false,
           verified: false,
@@ -212,6 +209,24 @@ export class PaymentService {
           timestamp: new Date().toISOString(),
         };
       }
+
+      // Check if this payment ID has already been fulfilled to prevent duplicate provisioning
+      if (processedPaymentIds.has(razorpay_payment_id)) {
+        const existing = processedPaymentIds.get(razorpay_payment_id)!;
+        return {
+          ...existing,
+          message: "Payment previously verified. Duplicate fulfillment prevented.",
+        };
+      }
+
+      return {
+        success: true,
+        verified: true,
+        orderId: razorpay_order_id,
+        paymentId: razorpay_payment_id,
+        message: "Payment signature cryptographically verified (Mock Environment).",
+        timestamp: new Date().toISOString(),
+      };
     }
 
     // Live mode verification with constant-time equality check
@@ -228,14 +243,32 @@ export class PaymentService {
         expectedBuf.length === actualBuf.length &&
         crypto.timingSafeEqual(expectedBuf, actualBuf);
 
+      if (!isValid) {
+        return {
+          success: false,
+          verified: false,
+          orderId: razorpay_order_id,
+          paymentId: razorpay_payment_id,
+          message: "Invalid payment signature.",
+          timestamp: new Date().toISOString(),
+        };
+      }
+
+      // Check if this payment ID has already been fulfilled to prevent duplicate provisioning
+      if (processedPaymentIds.has(razorpay_payment_id)) {
+        const existing = processedPaymentIds.get(razorpay_payment_id)!;
+        return {
+          ...existing,
+          message: "Payment previously verified. Duplicate fulfillment prevented.",
+        };
+      }
+
       return {
-        success: isValid,
-        verified: isValid,
+        success: true,
+        verified: true,
         orderId: razorpay_order_id,
         paymentId: razorpay_payment_id,
-        message: isValid
-          ? "Payment signature successfully verified."
-          : "Invalid payment signature.",
+        message: "Payment signature successfully verified.",
         timestamp: new Date().toISOString(),
       };
     } catch (err: unknown) {
@@ -278,18 +311,7 @@ export class PaymentService {
     const eventId = parsed.id || `evt_${Date.now()}`;
     const eventType = parsed.event || "unknown";
 
-    // 1. Replay attack check
-    if (processedEventIds.has(eventId)) {
-      return {
-        valid: true,
-        eventId,
-        eventType,
-        duplicate: true,
-        message: `Duplicate webhook ignored. Event '${eventId}' was previously processed.`,
-      };
-    }
-
-    // 2. Cryptographic signature check
+    // 1. Cryptographic HMAC signature check (strictly evaluated BEFORE replay checks)
     try {
       const expectedSignature = crypto
         .createHmac("sha256", this.webhookSecret)
@@ -304,23 +326,34 @@ export class PaymentService {
         (expectedBuf.length === actualBuf.length &&
           crypto.timingSafeEqual(expectedBuf, actualBuf));
 
-      if (isValid) {
-        processedEventIds.set(eventId, Date.now());
+      if (!isValid) {
+        return {
+          valid: false,
+          eventId,
+          eventType,
+          duplicate: false,
+          message: "Webhook HMAC signature mismatch.",
+        };
+      }
+
+      // 2. Replay attack check (evaluated strictly AFTER cryptographic verification)
+      if (processedEventIds.has(eventId)) {
         return {
           valid: true,
           eventId,
           eventType,
-          duplicate: false,
-          message: "Webhook signature verified successfully.",
+          duplicate: true,
+          message: `Duplicate webhook ignored. Event '${eventId}' was previously processed.`,
         };
       }
 
+      processedEventIds.set(eventId, Date.now());
       return {
-        valid: false,
+        valid: true,
         eventId,
         eventType,
         duplicate: false,
-        message: "Webhook HMAC signature mismatch.",
+        message: "Webhook signature verified successfully.",
       };
     } catch (err: unknown) {
       return {
@@ -331,6 +364,57 @@ export class PaymentService {
         message: `Webhook verification failed: ${(err as Error).message}`,
       };
     }
+  }
+
+  /**
+   * Retrieve order details from mock order store.
+   */
+  getOrder(orderId: string): { amount: number; planId: string; customerEmail?: string; createdAt: number } | undefined {
+    return mockOrderStore.get(orderId);
+  }
+
+  /**
+   * Acquire a processing lock for a payment ID to prevent concurrent duplicate provisioning.
+   * Returns true if lock was acquired, false if already processing or completed.
+   */
+  acquirePaymentLock(paymentId: string): boolean {
+    if (processedPaymentIds.has(paymentId)) {
+      return false;
+    }
+    // Reserve with in-flight pending status
+    processedPaymentIds.set(paymentId, {
+      success: true,
+      verified: true,
+      orderId: "",
+      paymentId,
+      message: "Payment fulfillment in progress.",
+      timestamp: new Date().toISOString(),
+    });
+    return true;
+  }
+
+  /**
+   * Release payment lock if provisioning fails, allowing retry.
+   */
+  releasePaymentLock(paymentId: string): void {
+    const existing = processedPaymentIds.get(paymentId);
+    if (existing && existing.message === "Payment fulfillment in progress.") {
+      processedPaymentIds.delete(paymentId);
+    }
+  }
+
+  /**
+   * Query idempotency cache for an existing processed payment.
+   */
+  getProcessedPayment(paymentId: string): PaymentVerificationResult | undefined {
+    return processedPaymentIds.get(paymentId);
+  }
+
+  /**
+   * Record verified payment in idempotency cache to prevent duplicate provisioning.
+   */
+  markPaymentProcessed(paymentId: string, result: PaymentVerificationResult): void {
+    processedPaymentIds.set(paymentId, result);
   }
 
   /**

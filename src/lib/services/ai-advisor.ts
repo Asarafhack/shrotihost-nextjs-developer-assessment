@@ -164,7 +164,7 @@ export class AiAdvisorService {
    * Live Gemini LLM execution strictly constrained to ShrotiHost catalog
    */
   private async queryGemini(message: string, history: { role: string; content: string }[]): Promise<AdvisorRecommendationResult | null> {
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${this.geminiModel}:generateContent?key=${this.geminiApiKey}`;
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${this.geminiModel}:generateContent`;
 
     const systemInstruction = `You are the ShrotiHost Technical Infrastructure Advisor.
 You only recommend real hosting plans offered by ShrotiHost:
@@ -185,7 +185,11 @@ Always respond in concise, professional terms. Recommend one specific plan id an
 
     const response = await fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      signal: AbortSignal.timeout(8000),
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": this.geminiApiKey || "",
+      },
       body: JSON.stringify({
         system_instruction: { parts: [{ text: systemInstruction }] },
         contents,
