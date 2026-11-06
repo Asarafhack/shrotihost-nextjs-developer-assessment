@@ -220,7 +220,7 @@ export function ArchitectureDiagram() {
                 <span>LVE Virtualization</span>
               </div>
               <p className="text-slate-300 text-[11px] leading-relaxed">
-                Each cPanel account resides in its own isolated Lightweight Virtual Environment (LVE) with dedicated CPU, RAM, and IOPS caps.
+                Each cPanel account resides in its own isolated Lightweight Virtual Environment (LVE) with guaranteed CPU allocation, RAM, and IOPS caps.
               </p>
             </div>
             <div className="rounded-xl border border-slate-700 bg-slate-800/60 p-4">
