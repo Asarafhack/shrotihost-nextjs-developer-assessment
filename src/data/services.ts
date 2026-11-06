@@ -38,7 +38,7 @@ export const SERVICES: ServiceOffering[] = [
     heroSubheadline: "From enterprise portals and PWAs to headless web applications, we engineer ultra-fast web experiences optimized directly for NVMe server stacks.",
     description: "Custom frontend and backend web engineering designed around maintainability, accessibility, core web vitals, and tight hosting integration.",
     businessProblem: "Generic off-the-shelf templates and unoptimized WordPress themes suffer from code bloat, fragile plugin dependencies, sluggish database queries, and frequent security vulnerabilities.",
-    solutionOverview: "We architect clean, bespoke web systems using modern frameworks (Next.js, React, Node.js) designed to deliver sub-second time-to-first-byte (TTFB) directly on our LiteSpeed and NVMe clusters.",
+    solutionOverview: "We architect clean, bespoke web systems using modern frameworks (Next.js, React, Node.js) designed to deliver low-latency page delivery and responsive performance directly on our LiteSpeed and NVMe clusters.",
     deliverables: [
       {
         title: "Modern Jamstack & Next.js Architecture",
@@ -170,7 +170,7 @@ export const SERVICES: ServiceOffering[] = [
     tagline: "Fast storefronts engineered for Indian checkout conversion",
     heroHeadline: "Turn Browsers into Buyers with Lightning-Fast Storefronts",
     heroSubheadline: "Custom WooCommerce and headless commerce setups integrated with native Indian payment gateways: UPI, RuPay, NetBanking, and automated shipping APIs.",
-    description: "Tailor-made e-commerce storefronts engineered for sub-second checkout speeds, high concurrency sales events, and frictionless mobile transactions.",
+    description: "Tailor-made e-commerce storefronts engineered for fast checkout speeds, high concurrency sales events, and frictionless mobile transactions.",
     businessProblem: "Over 70% of e-commerce shoppers abandon carts due to checkout lag, slow catalog loading, or confusing payment gateway redirects.",
     solutionOverview: "We build streamlined online storefronts equipped with server-side Redis object caching, optimized product database queries, and seamless 1-click UPI and card checkout experiences.",
     deliverables: [

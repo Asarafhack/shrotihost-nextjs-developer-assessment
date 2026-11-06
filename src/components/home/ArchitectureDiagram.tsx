@@ -24,7 +24,7 @@ export function ArchitectureDiagram() {
               Hardware & Web Server Topology
             </h3>
             <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              Real architectural benchmarks running on Shroti Host production clusters.
+              Architectural comparison of Shroti Host production infrastructure vs legacy hosting setups.
             </p>
           </div>
 
@@ -78,25 +78,25 @@ export function ArchitectureDiagram() {
                   <Zap className="h-4 w-4 text-purple-400" />
                   Shroti Host: LiteSpeed Enterprise
                 </span>
-                <Badge variant="purple" size="sm">Up to 400% Faster</Badge>
+                <Badge variant="purple" size="sm">Event-Driven Architecture</Badge>
               </div>
               <div className="space-y-3 text-xs">
                 <div>
                   <div className="flex justify-between mb-1 text-slate-300">
-                    <span>Requests Processed / sec (RPS)</span>
-                    <span className="font-mono font-bold text-purple-400">4,850 req/s</span>
+                    <span>Concurrency &amp; Memory Efficiency</span>
+                    <span className="font-mono font-bold text-purple-400">High Efficiency (RAM Cache)</span>
                   </div>
                   <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-purple-500 w-[95%]" />
+                    <div className="h-full bg-purple-500 w-[90%]" />
                   </div>
                 </div>
                 <div>
                   <div className="flex justify-between mb-1 text-slate-300">
-                    <span>Time To First Byte (TTFB)</span>
-                    <span className="font-mono font-bold text-emerald-400">&lt; 85 ms</span>
+                    <span>PHP Worker Overhead</span>
+                    <span className="font-mono font-bold text-emerald-400">Minimal (Direct Cache Bypass)</span>
                   </div>
                   <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-emerald-500 w-[20%]" />
+                    <div className="h-full bg-emerald-500 w-[25%]" />
                   </div>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-3 pt-3 border-t border-slate-800 leading-relaxed">
@@ -109,27 +109,27 @@ export function ArchitectureDiagram() {
               <div className="flex items-center justify-between mb-4">
                 <span className="font-bold text-sm text-slate-300 flex items-center gap-1.5">
                   <Server className="h-4 w-4 text-slate-400" />
-                  Legacy Providers: Apache Process-Based
+                  Legacy Hosting: Apache Threaded Model
                 </span>
-                <span className="text-xs text-red-400">High Overhead</span>
+                <span className="text-xs text-red-400">Process Contention</span>
               </div>
               <div className="space-y-3 text-xs">
                 <div>
                   <div className="flex justify-between mb-1 text-slate-400">
-                    <span>Requests Processed / sec</span>
-                    <span className="font-mono">1,120 req/s</span>
+                    <span>Concurrency &amp; Memory Efficiency</span>
+                    <span className="font-mono text-slate-400">Low (Process-per-Request)</span>
                   </div>
                   <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-slate-600 w-[25%]" />
+                    <div className="h-full bg-slate-600 w-[30%]" />
                   </div>
                 </div>
                 <div>
                   <div className="flex justify-between mb-1 text-slate-400">
-                    <span>Time To First Byte (TTFB)</span>
-                    <span className="font-mono text-red-400">480 ms</span>
+                    <span>PHP Worker Overhead</span>
+                    <span className="font-mono text-red-400">High (Spawns Thread per Visitor)</span>
                   </div>
                   <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-red-500 w-[80%]" />
+                    <div className="h-full bg-red-500 w-[85%]" />
                   </div>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-3 pt-3 border-t border-slate-800 leading-relaxed">
@@ -149,13 +149,13 @@ export function ArchitectureDiagram() {
                   <HardDrive className="h-4 w-4 text-purple-400" />
                   Enterprise PCIe Gen4 NVMe
                 </span>
-                <Badge variant="purple" size="sm">7x Sequential Read</Badge>
+                <Badge variant="purple" size="sm">PCIe Bus Throughput</Badge>
               </div>
               <div className="space-y-3 text-xs">
                 <div>
                   <div className="flex justify-between mb-1 text-slate-300">
-                    <span>Sequential Read Speed</span>
-                    <span className="font-mono font-bold text-purple-400">3,500+ MB/s</span>
+                    <span>Interface Architecture</span>
+                    <span className="font-mono font-bold text-purple-400">Direct PCIe Lanes</span>
                   </div>
                   <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
                     <div className="h-full bg-purple-500 w-[95%]" />
@@ -163,11 +163,11 @@ export function ArchitectureDiagram() {
                 </div>
                 <div>
                   <div className="flex justify-between mb-1 text-slate-300">
-                    <span>Random Read IOPS</span>
-                    <span className="font-mono font-bold text-emerald-400">550,000 IOPS</span>
+                    <span>Database I/O Wait Latency</span>
+                    <span className="font-mono font-bold text-emerald-400">Near-Zero Microsecond Queue</span>
                   </div>
                   <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-emerald-500 w-[90%]" />
+                    <div className="h-full bg-emerald-500 w-[15%]" />
                   </div>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-3 pt-3 border-t border-slate-800 leading-relaxed">
@@ -182,25 +182,25 @@ export function ArchitectureDiagram() {
                   <HardDrive className="h-4 w-4 text-slate-400" />
                   Standard SATA SSD / HDD
                 </span>
-                <span className="text-xs text-red-400">Bus Constrained</span>
+                <span className="text-xs text-red-400">Bus Bottleneck</span>
               </div>
               <div className="space-y-3 text-xs">
                 <div>
                   <div className="flex justify-between mb-1 text-slate-400">
-                    <span>Sequential Read Speed</span>
-                    <span className="font-mono">520 MB/s</span>
+                    <span>Interface Architecture</span>
+                    <span className="font-mono text-slate-400">Legacy SATA-III Cable</span>
                   </div>
                   <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-slate-600 w-[15%]" />
+                    <div className="h-full bg-slate-600 w-[20%]" />
                   </div>
                 </div>
                 <div>
                   <div className="flex justify-between mb-1 text-slate-400">
-                    <span>Random Read IOPS</span>
-                    <span className="font-mono text-red-400">75,000 IOPS</span>
+                    <span>Database I/O Wait Latency</span>
+                    <span className="font-mono text-red-400">SATA Queue Serialization</span>
                   </div>
                   <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-red-500 w-[20%]" />
+                    <div className="h-full bg-red-500 w-[75%]" />
                   </div>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-3 pt-3 border-t border-slate-800 leading-relaxed">

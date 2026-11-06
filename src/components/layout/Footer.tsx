@@ -111,15 +111,15 @@ export function Footer() {
 
             {/* Col 3: Hosting Products */}
             <div>
-              <p className="font-semibold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-3">
+              <p className="font-bold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-4">
                 Hosting
               </p>
-              <ul className="space-y-2 text-xs">
+              <ul className="space-y-2.5 text-sm">
                 {MAIN_NAVIGATION.hosting.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                      className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -130,12 +130,12 @@ export function Footer() {
 
             {/* Col 4: Domains & Tools */}
             <div>
-              <p className="font-semibold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-3">
-                Domains & Tools
+              <p className="font-bold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-4">
+                Domains &amp; Tools
               </p>
-              <ul className="space-y-2 text-xs">
+              <ul className="space-y-2.5 text-sm">
                 <li>
-                  <Link href="/domains" className="hover:text-purple-600 dark:hover:text-purple-400">
+                  <Link href="/domains" className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                     Domain Search
                   </Link>
                 </li>
@@ -143,7 +143,7 @@ export function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                      className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -154,33 +154,33 @@ export function Footer() {
 
             {/* Col 5: Services & Company */}
             <div>
-              <p className="font-semibold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-3">
-                Services
+              <p className="font-bold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-4">
+                Services &amp; About
               </p>
-              <ul className="space-y-2 text-xs">
+              <ul className="space-y-2.5 text-sm">
                 {MAIN_NAVIGATION.services.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                      className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                     >
                       {item.label}
                     </Link>
                   </li>
                 ))}
-                <li className="pt-2">
-                  <Link href="/about" className="hover:text-purple-600 dark:hover:text-purple-400">
+                <li className="pt-2 border-t border-slate-200/50 dark:border-slate-800/50">
+                  <Link href="/about" className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                     About Company
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" className="hover:text-purple-600 dark:hover:text-purple-400">
+                  <Link href="/blog" className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                     Technical Blog
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="hover:text-purple-600 dark:hover:text-purple-400">
-                    Contact & Routing
+                  <Link href="/contact" className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                    Contact &amp; Routing
                   </Link>
                 </li>
               </ul>
@@ -188,29 +188,29 @@ export function Footer() {
 
             {/* Col 6: Legal & Portal */}
             <div>
-              <p className="font-semibold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-3">
-                Legal & Access
+              <p className="font-bold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-4">
+                Legal &amp; Trust
               </p>
-              <ul className="space-y-2 text-xs">
+              <ul className="space-y-2.5 text-sm">
                 {MAIN_NAVIGATION.legal.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                      className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                     >
                       {item.label}
                     </Link>
                   </li>
                 ))}
-                <li className="pt-3">
+                <li className="pt-2 border-t border-slate-200/50 dark:border-slate-800/50">
                   <a
                     href={COMPANY_DETAILS.portalUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 font-semibold text-purple-600 dark:text-purple-400 hover:underline"
+                    className="inline-flex items-center gap-1.5 font-semibold text-purple-600 dark:text-purple-400 hover:underline"
                   >
                     <span>Client Portal</span>
-                    <ExternalLink className="h-3 w-3" />
+                    <ExternalLink className="h-3.5 w-3.5" />
                   </a>
                 </li>
               </ul>

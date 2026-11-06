@@ -45,7 +45,7 @@ Source: `https://shrotihost.in/wordpress-hosting`
 | **WP Starter** | ₹69 / mo | ₹69 / mo | 15 GB NVMe | 1.5 GB | 1 Site | LiteSpeed Cache, Auto-Updates |
 | **WP Business** | ₹119 / mo | ₹119 / mo | 45 GB NVMe | 2.5 GB | 3 Sites | 1-Click Staging, Free SSL |
 | **WP Performance** | ₹229 / mo | ₹229 / mo | 100 GB NVMe | 4 GB | 10 Sites | Redis Object Cache, Staging |
-| **WP Ultimate** | ₹379 / mo | ₹379 / mo | 200 GB NVMe | 6 GB | Unlimited | VIP Priority Support, Redis |
+| **WP Ultimate** | ₹379 / mo | ₹379 / mo | 200 GB NVMe | 6 GB | Unlimited | Priority Support, Redis |
 
 ### 2.3 Unlimited Multi-Site Hosting
 Source: `https://shrotihost.in/unlimited-hosting`

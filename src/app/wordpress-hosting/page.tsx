@@ -51,7 +51,7 @@ export default function WordPressHostingPage() {
             </h1>
 
             <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-              Fine-tuned server architecture purpose-built for WordPress performance. Sub-second TTFB, automated core updates, 1-click staging, and guaranteed{" "}
+              Fine-tuned server architecture purpose-built for WordPress performance. LiteSpeed caching, automated core updates, 1-click staging, and guaranteed{" "}
               <strong className="text-purple-600 dark:text-purple-400 font-semibold">
                 Same-Price Renewals
               </strong>.
@@ -110,7 +110,7 @@ export default function WordPressHostingPage() {
                 LiteSpeed Cache (LSCache)
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
-                Server-level page caching that delivers static HTML directly from RAM. Bypasses PHP execution completely for up to 4,800 requests per second.
+                Server-level page caching that delivers static assets directly from RAM. Bypasses PHP execution to handle high-traffic surges smoothly and reliably.
               </p>
             </div>
 

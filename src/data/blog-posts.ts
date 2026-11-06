@@ -83,8 +83,8 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     id: "post-3",
     slug: "wordpress-speed-optimization",
-    title: "LSCache and NVMe Optimization: Sub-Second Load Times for WordPress",
-    excerpt: "A technical walkthrough on pairing LiteSpeed Web Server, Enterprise NVMe SSDs, and Redis Object Caching to achieve sub-second Time-To-First-Byte (TTFB).",
+    title: "LSCache and NVMe Optimization: High-Performance Caching for WordPress",
+    excerpt: "A practical technical guide on pairing LiteSpeed Web Server, Enterprise NVMe SSDs, and Redis Object Caching to reduce page latency and server load.",
     category: "Performance",
     author: {
       name: "Performance Engineering",
