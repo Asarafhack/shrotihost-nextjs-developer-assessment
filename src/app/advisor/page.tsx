@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import {
   HelpCircle,
@@ -78,11 +78,12 @@ export default function PlanAdvisorPage() {
   ]);
   const [userInput, setUserInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const msgIdCounter = useRef(1);
 
   const handleSendPrompt = async (promptText: string) => {
     if (!promptText.trim()) return;
 
-    const userMsgId = `user-${Date.now()}`;
+    const userMsgId = `user-${msgIdCounter.current++}`;
     const userMsg: ChatMessage = {
       id: userMsgId,
       sender: "user",
@@ -106,7 +107,7 @@ export default function PlanAdvisorPage() {
           setChatMessages((prev) => [
             ...prev,
             {
-              id: `advisor-${Date.now()}`,
+              id: `advisor-${msgIdCounter.current++}`,
               sender: "advisor",
               text: data.reply,
               recommendedPlan: data.recommendedPlan,
@@ -183,7 +184,7 @@ export default function PlanAdvisorPage() {
       }
 
       const advisorMsg: ChatMessage = {
-        id: `adv-${Date.now()}`,
+        id: `adv-${msgIdCounter.current++}`,
         sender: "advisor",
         text: replyText,
         recommendedPlan: plan,
@@ -551,7 +552,7 @@ export default function PlanAdvisorPage() {
                     <button
                       key={opt.id}
                       type="button"
-                      onClick={() => setAnswers({ ...answers, websiteCount: opt.id as any })}
+                      onClick={() => setAnswers({ ...answers, websiteCount: opt.id as QuestionnaireState["websiteCount"] })}
                       className={`p-4 rounded-xl border text-left transition-all ${
                         answers.websiteCount === opt.id
                           ? "border-purple-600 bg-purple-50/50 dark:bg-purple-950/40 text-purple-950 dark:text-purple-200 ring-1 ring-purple-600"
@@ -598,7 +599,7 @@ export default function PlanAdvisorPage() {
                         <button
                           key={opt.id}
                           type="button"
-                          onClick={() => setAnswers({ ...answers, isWordPress: opt.id as any })}
+                          onClick={() => setAnswers({ ...answers, isWordPress: opt.id as QuestionnaireState["isWordPress"] })}
                           className={`p-2.5 rounded-lg border text-xs font-semibold text-center transition-all ${
                             answers.isWordPress === opt.id
                               ? "border-purple-600 bg-purple-50 dark:bg-purple-950/50 text-purple-900 dark:text-purple-200 ring-1 ring-purple-600"
@@ -659,7 +660,7 @@ export default function PlanAdvisorPage() {
                     <button
                       key={opt.id}
                       type="button"
-                      onClick={() => setAnswers({ ...answers, expectedTraffic: opt.id as any })}
+                      onClick={() => setAnswers({ ...answers, expectedTraffic: opt.id as QuestionnaireState["expectedTraffic"] })}
                       className={`p-4 rounded-xl border text-left transition-all ${
                         answers.expectedTraffic === opt.id
                           ? "border-purple-600 bg-purple-50/50 dark:bg-purple-950/40 text-purple-950 dark:text-purple-200 ring-1 ring-purple-600"

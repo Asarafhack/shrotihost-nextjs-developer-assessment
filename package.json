@@ -6,7 +6,9 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
+    "test": "node scripts/test-integrations.mjs",
+    "test:routes": "node scripts/audit-routes.mjs",
     "test:backend": "node scripts/test-integrations.mjs"
   },
   "dependencies": {
