@@ -90,3 +90,12 @@
 4. **Missing Property in Grievance Officer Metadata:**
    - *Problem:* TypeScript caught `COMPANY_DETAILS.city` mismatch in `privacy/page.tsx`.
    - *Resolution:* Replaced with unified `COMPANY_DETAILS.headquarters` property, restoring full TypeScript type-safety.
+5. **Tailwind CSS v4 PostCSS Pipeline & 655-Byte Bundle Resolution:**
+   - *Problem:* Next.js 16 Webpack mode did not run PostCSS over `@import "tailwindcss";` without explicit config, resulting in a 655-byte CSS file with missing utilities.
+   - *Resolution:* Installed `@tailwindcss/postcss` and `postcss`, configured `postcss.config.mjs`, added `@source "../**/*.{js,ts,jsx,tsx}";`, and added `@custom-variant dark (&:where(.dark, .dark *));`. The CSS bundle expanded to **69,902 bytes**, restoring complete styling across the platform.
+6. **Commercial Claims & Synthetic Benchmarks Sanitization:**
+   - *Problem:* Marketing text in some sections contained unverified figures ("up to 4,800 req/s", "< 85 ms TTFB", "VIP SLA support").
+   - *Resolution:* Audited and sanitized all claims across data files and components, replacing them with truthful hardware architecture facts and operational target uptime commitments.
+7. **Automated End-to-End Screenshot Suite:**
+   - *Problem:* Verification required actual browser rendering proof across desktop (1440x900) and mobile (390x844) viewports.
+   - *Resolution:* Engineered an automated CDP script connecting to headless Chrome, capturing 18 high-resolution PNG screenshots saved directly to `docs/screenshots/`.

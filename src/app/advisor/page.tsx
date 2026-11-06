@@ -85,7 +85,7 @@ export default function PlanAdvisorPage() {
         primaryId = "wp-business";
         altId = "wp-starter";
         rationale.push("Tailored for WooCommerce with elevated PHP memory limits (512M) and 1-click staging.");
-        rationale.push("LiteSpeed Cache integration delivers sub-100ms TTFB.");
+        rationale.push("LiteSpeed Cache integration delivers fast dynamic page delivery without heavy PHP worker overhead.");
       } else {
         primaryId = "wp-starter";
         altId = "shared-launch";

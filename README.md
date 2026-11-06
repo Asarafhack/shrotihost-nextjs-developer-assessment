@@ -120,10 +120,12 @@ shrotihost-redesign/
 │   ├── information-architecture.md   # IA hierarchy & user journeys
 │   ├── content-source-register.md    # Source registry of verified live data
 │   ├── content-verification.md       # Anti-fabrication & demo safeguards
+│   ├── final-submission-audit.md     # 20-point commercial claims audit matrix
 │   ├── design-rationale.md           # Visual design system & WCAG rationale
-│   ├── qa-report.md                  # Comprehensive 26-route QA matrix
+│   ├── qa-report.md                  # Comprehensive 26-route QA matrix & build fixes
 │   ├── ai-tool-disclosure.md         # Transparent AI usage disclosure
-│   └── implementation-progress.md    # Milestones & verification checklist
+│   ├── implementation-progress.md    # Milestones & verification checklist
+│   └── screenshots/                  # 18 automated high-res desktop & mobile screenshots
 ├── src/
 │   ├── app/                          # Next.js 16 App Router
 │   │   ├── (routes)/                 # 26 statically prerendered routes
