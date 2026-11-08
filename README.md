@@ -1,4 +1,4 @@
-# Shroti Host — Full Website Redesign & Frontend Engineering Submission
+# ShrotiHost – Full Website Redesign | Next.js Developer Assessment
 
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.4.5-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19.3.0-blue?style=flat&logo=react)](https://react.dev/)
@@ -41,8 +41,8 @@ This repository contains the complete, production-grade redesign and frontend en
 ### Installation & Run Commands
 ```bash
 # 1. Clone repository
-git clone https://github.com/shrotihost/redesign-submission.git
-cd shrotihost-redesign
+git clone https://github.com/Asarafhack/shrotihost-nextjs-developer-assessment.git
+cd shrotihost-nextjs-developer-assessment
 
 # 2. Install dependencies
 npm install
